@@ -56,7 +56,7 @@ fn input_for_index(i: Int, hex_prefix: Span[UInt8]) -> List[UInt8]:
     r.append(UInt8((i >> 16) & 0xFF))
     r.append(UInt8((i >> 8) & 0xFF))
     r.append(UInt8(i & 0xFF))
-    return r
+    return r^
 
 
 fn starts_with(data: Span[UInt8], prefix: Span[UInt8]) -> Bool:
@@ -112,7 +112,7 @@ fn h2b(str: StringSlice[mut=False]) -> List[UInt8]:
         var hi = data[i]
         var lo = data[i + 1]
         result.append(decode(hi) << 4 | decode(lo))
-    return result
+    return result^
 
 
 fn matching_hashes_for_range(
@@ -348,8 +348,8 @@ fn process_gpu_thread_optimized(
         0
     )  # RIPEMD160 output is always 20 bytes
 
-    var prefix_span = Span[UInt8](prefix.data, len(prefix))
-    var match_span = Span[UInt8](match_bytes.data, len(match_bytes))
+    var prefix_span = Span(prefix)
+    var match_span  = Span(match_bytes)
 
     for offset in range(my_end - my_start):
         idx = my_start + offset

@@ -447,7 +447,7 @@ struct RipeMD160:
                 block.append(fin[i])
                 i += 1
             # Convert to UInt32 span
-            uint32_ptr = block.data.bitcast[UInt32]()
+            uint32_ptr = Span(block).unsafe_ptr().bitcast[UInt32]()
             block_span = Span[UInt32, ImmutableAnyOrigin](
                 ptr=uint32_ptr, length=16
             )
@@ -460,7 +460,7 @@ struct RipeMD160:
         append_uint32(out, s2)
         append_uint32(out, s3)
         append_uint32(out, s4)
-        return out
+        return out^
 
 
 alias bytes_ptr = Pointer[Int8]
@@ -517,7 +517,7 @@ fn create_pad_blocks(data: Span[UInt8], offset: UInt32) -> List[UInt8]:
     for i in range(8):
         result.append(UInt8((size_bits >> (i * 8)) & 0xFF))
 
-    return result
+    return result^
 
 
 @always_inline

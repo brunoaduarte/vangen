@@ -15,4 +15,4 @@ fn hash160_span(blob: Span[UInt8]) raises -> List[UInt8]:
     var ripe_hasher = RipeMD160()
     var ripe_result = ripe_hasher.ripemd160(Span(sha_result))
 
-    return ripe_result
+    return ripe_result^

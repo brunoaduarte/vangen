@@ -196,7 +196,7 @@ struct SHA256:
                 block.append(fin[i])
                 i += 1
             var result = self.compress(
-                s0, s1, s2, s3, s4, s5, s6, s7, block.data
+                s0, s1, s2, s3, s4, s5, s6, s7, Span(block).unsafe_ptr()
             )
             s0 = result[0]
             s1 = result[1]
@@ -251,7 +251,7 @@ struct SHA256:
         out.append(UInt8((s7 >> 8) & 0xFF))
         out.append(UInt8((s7 >> 0) & 0xFF))
 
-        return out
+        return out^
 
 
 fn rotr(x: UInt32, n: UInt8) -> UInt32:
@@ -295,7 +295,7 @@ fn create_pad_blocks_sha256(
     for i in range(8):
         result.append(UInt8((size_bits >> ((7 - i) * 8)) & 0xFF))
 
-    return result
+    return result^
 
 
 fn b2h(input_bytes: Span[Byte]) -> String:

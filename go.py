@@ -1,4 +1,3 @@
-import max.mojo.importer
 import sys
 
 sys.path.insert(0, "")
