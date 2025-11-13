@@ -6,7 +6,7 @@ authors = [
 ]
 description = "A Python module for Bitcoin vanity address generation."
 dependencies = [
-    "modular>=25.4.0",
+    "modular==25.4.0",
     "pycoin",
 ]
 
